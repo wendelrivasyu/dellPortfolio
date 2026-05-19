@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name | Interactive Portfolio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables for Light/Dark Mode --- */
+        :root {
+            /* Dark Mode (Default) */
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent-hover: #0284c7;
+            --card-bg: #1e293b;
+            --nav-bg: rgba(15, 23, 42, 0.85);
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Light Mode Overrides */
+        body.light-mode {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent: #0284c7;
+            --accent-hover: #38bdf8;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(248, 250, 252, 0.85);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        /* --- Global Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            position: relative;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- Parallax Background Shapes --- */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent);
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+            transition: transform 0.1s linear;
+        }
+        .shape-1 { top: 10%; left: -10%; width: 400px; height: 400px; }
+        .shape-2 { top: 40%; right: -10%; width: 500px; height: 500px; }
+        .shape-3 { bottom: 5%; left: 20%; width: 300px; height: 300px; }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+        }
+
+        .nav-links a { font-weight: 600; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+
+        /* --- Layout & Sections --- */
+        section {
+            padding: 8rem 2rem 4rem;
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .section-title span { color: var(--accent); }
+
+        /* --- Hero Section --- */
+        .hero {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        .hero-text { flex: 1; }
+        .hero-image { flex: 1; position: relative; }
+        
+        .hero-image img {
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 4px solid var(--card-bg);
+        }
+        .hero-image img:hover {
+            transform: translateY(-10px) rotate(2deg);
+        }
+
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; margin-bottom: 1rem; }
+        .hero h2 { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--text-muted); margin-bottom: 1.5rem; }
+        .hero p { color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; max-width: 500px; }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--accent);
+            color: #fff;
+            font-weight: 800;
+            border-radius: 8px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+            background-color: var(--accent-hover);
+        }
+
+        /* --- Experience Timeline Section --- */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        /* The vertical line */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            border-radius: 4px;
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            padding: 10px 0 30px 60px;
+            position: relative;
+            width: 100%;
+        }
+
+        /* The dots on the timeline */
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 12px;
+            top: 15px;
+            background-color: var(--bg-color);
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.3);
+            background-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .timeline-content {
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .timeline-item:hover .timeline-content {
+            transform: translateX(10px);
+        }
+
+        .exp-type {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .exp-title { font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.2rem; }
+        .exp-meta { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1rem; font-weight: 600; }
+        .exp-desc { color: var(--text-muted); font-size: 1rem; }
+
+        /* --- Projects Section --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-image { width: 100%; height: 250px; overflow: hidden; }
+        .project-image img { width: 100%; height: 100%; border-radius: 0; transition: transform 0.6s ease; }
+        .project-card:hover .project-image img { transform: scale(1.05); }
+        .project-content { padding: 2rem; }
+        .project-role { font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .project-date { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .project-desc { color: var(--text-main); font-size: 1rem; }
+
+        /* --- Advanced Scroll Animation Classes --- */
+        .scroll-hidden-left { opacity: 0; transform: translateX(-80px); transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .scroll-hidden-right { opacity: 0; transform: translateX(80px); transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .scroll-hidden-bottom { opacity: 0; transform: translateY(80px); transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .scroll-hidden-scale { opacity: 0; transform: scale(0.8); transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        
+        .scroll-show {
+            opacity: 1;
+            transform: translateX(0) translateY(0) scale(1);
+        }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; }
+
+        /* --- Desktop Media Queries --- */
+        @media (min-width: 900px) {
+            .nav-links { display: flex; }
+            .hero { flex-direction: row; text-align: left; }
+            .grid-container { grid-template-columns: repeat(2, 1fr); }
+            
+            /* Center the timeline on large screens */
+            .timeline::after { left: 50%; margin-left: -2px; }
+            .timeline-item { width: 50%; padding: 0 40px 40px 0; }
+            .timeline-item:nth-child(even) { left: 50%; padding: 0 0 40px 40px; }
+            .timeline-dot { left: auto; right: -14px; }
+            .timeline-item:nth-child(even) .timeline-dot { left: -14px; }
+            .timeline-item:nth-child(odd) .timeline-content { text-align: right; }
+            
+            .timeline-item:hover .timeline-content { transform: translateY(-5px); } /* Reset X shift for desktop */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Decorative Parallax Shapes -->
+    <div class="shape shape-1" data-speed="0.05"></div>
+    <div class="shape shape-2" data-speed="-0.03"></div>
+    <div class="shape shape-3" data-speed="0.08"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Dev.Folio</div>
+        <div class="nav-controls">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <!-- Theme Toggle -->
+            <button class="theme-toggle" id="theme-btn" aria-label="Toggle Dark/Light Mode">☀️</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-text scroll-hidden-left">
+            <p style="color: var(--accent); font-weight: 600; margin-bottom: 1rem;">Welcome to my universe</p>
+            <h1>Creative<br>Developer.</h1>
+            <h2>I adapt, teach, and build.</h2>
+            <p>Blending technical expertise with varied professional experiences to build fast, accessible, and highly interactive digital products.</p>
+            <a href="#experience" class="btn">Explore My Journey</a>
+        </div>
+        <!-- Profile Image (Placeholder) -->
+        <div class="hero-image scroll-hidden-right">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Portrait of Developer">
+        </div>
+    </section>
+
+    <!-- Experience Timeline Section -->
+    <section id="experience">
+        <h2 class="section-title scroll-hidden-bottom">My <span>Experience</span></h2>
+        
+        <div class="timeline">
+            <!-- Office Experience -->
+            <div class="timeline-item scroll-hidden-bottom" style="transition-delay: 0.1s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="exp-type">Office / Corporate</span>
+                    <h3 class="exp-title">Software Engineer</h3>
+                    <div class="exp-meta">Tech Corp Solutions | 2022 - Present</div>
+                    <p class="exp-desc">Led a team of developers in building and deploying scalable web applications. Collaborated cross-functionally with product and design teams in a fast-paced agile environment to deliver features that increased user retention by 30%.</p>
+                </div>
+            </div>
+
+            <!-- Freelance Experience -->
+            <div class="timeline-item scroll-hidden-bottom" style="transition-delay: 0.2s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="exp-type">Freelance</span>
+                    <h3 class="exp-title">Independent Web Developer</h3>
+                    <div class="exp-meta">Self-Employed | 2020 - 2022</div>
+                    <p class="exp-desc">Consulted directly with small business owners and startups to design, develop, and host custom websites. Managed client expectations, negotiated contracts, and delivered SEO-optimized, mobile-first e-commerce platforms.</p>
+                </div>
+            </div>
+
+            <!-- Teaching Experience -->
+            <div class="timeline-item scroll-hidden-bottom" style="transition-delay: 0.3s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="exp-type">Teaching</span>
+                    <h3 class="exp-title">Lead Coding Instructor</h3>
+                    <div class="exp-meta">CodeAcademy Bootcamp | 2018 - 2020</div>
+                    <p class="exp-desc">Developed curriculum and taught intensive, immersive courses on full-stack web development (HTML, CSS, JavaScript, React). Mentored over 100+ students, helping them transition into tech careers through code reviews and pair programming.</p>
+                </div>
+            </div>
+
+            <!-- Other Works -->
+            <div class="timeline-item scroll-hidden-bottom" style="transition-delay: 0.4s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="exp-type">Other Roles</span>
+                    <h3 class="exp-title">IT Support & Community Manager</h3>
+                    <div class="exp-meta">Local Tech Hub | 2016 - 2018</div>
+                    <p class="exp-desc">Provided hardware and software troubleshooting for a bustling co-working space. Organized weekly tech meetups, managed the hub's digital presence, and fostered a collaborative community of local creators and developers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work/Projects Section -->
+    <section id="work">
+        <h2 class="section-title scroll-hidden-bottom">Featured <span>Projects</span></h2>
+        
+        <div class="grid-container">
+            <div class="project-card scroll-hidden-scale" style="transition-delay: 0.1s;">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dashboard UI">
+                </div>
+                <div class="project-content">
+                    <div class="project-role">FinTech Dashboard UI</div>
+                    <div class="project-date">React &middot; Tailwind &middot; Chart.js</div>
+                    <p class="project-desc">A highly interactive data visualization dashboard built for real-time financial tracking, featuring customizable widgets and responsive grids.</p>
+                </div>
+            </div>
+
+            <div class="project-card scroll-hidden-scale" style="transition-delay: 0.2s;">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="E-Commerce Store">
+                </div>
+                <div class="project-content">
+                    <div class="project-role">Modern E-Commerce</div>
+                    <div class="project-date">Next.js &middot; Stripe &middot; Framer Motion</div>
+                    <p class="project-desc">A full-stack e-commerce platform with seamless cart management, secure payments, and fluid page transitions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh;">
+        <h2 class="section-title scroll-hidden-bottom">Let's <span>Connect</span></h2>
+        <p class="scroll-hidden-bottom" style="text-align: center; color: var(--text-muted); max-width: 600px; margin-bottom: 2.5rem; transition-delay: 0.1s;">
+            Whether you have a wild idea for a project, need a versatile developer for your team, or just want to chat about tech, I'm always open to talking.
+        </p>
+        <a href="mailto:hello@yourdomain.com" class="btn scroll-hidden-bottom" style="transition-delay: 0.2s;">Say Hello</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Crafted with ❤️ by You.</p>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // 1. Light/Dark Mode Toggle with LocalStorage
+        const themeBtn = document.getElementById('theme-btn');
+        const body = document.body;
+        
+        // Check saved theme
+        const savedTheme = localStorage.getItem('portfolio-theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeBtn.textContent = '🌙';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                themeBtn.textContent = '🌙';
+                localStorage.setItem('portfolio-theme', 'light');
+            } else {
+                themeBtn.textContent = '☀️';
+                localStorage.setItem('portfolio-theme', 'dark');
+            }
+        });
+
+        // 2. Advanced Scroll Animations (Intersection Observer)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('scroll-show');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        // Select all elements with the hidden classes
+        const animatedElements = document.querySelectorAll('.scroll-hidden-left, .scroll-hidden-right, .scroll-hidden-bottom, .scroll-hidden-scale');
+        animatedElements.forEach(el => observer.observe(el));
+
+        // 3. Parallax Effect for Background Shapes
+        document.addEventListener('scroll', () => {
+            const shapes = document.querySelectorAll('.shape');
+            const scrollY = window.scrollY;
+
+            shapes.forEach(shape => {
+                const speed = parseFloat(shape.getAttribute('data-speed'));
+                shape.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
