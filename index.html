@@ -171,6 +171,7 @@
             background: var(--bg-surface); border: 1px solid var(--border-color); 
             display: flex; flex-direction: column; transition: var(--transition);
             transform-origin: top; border-radius: 4px; overflow: hidden;
+            cursor: pointer; /* Suggests interactivity for the hover expansion */
         }
         .project-card.hide { display: none; }
         .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
@@ -180,7 +181,10 @@
         .project-content { padding: 2rem; }
         .project-category { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 0.5rem; font-weight: 600; }
         .project-title { font-size: 1.4rem; margin-bottom: 1rem; }
-        .project-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        
+        /* Smooth transitions for text expansion */
+        .project-desc, .project-metric { transition: all 0.3s ease; }
+        .project-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; }
         .project-metric { background: var(--accent-light); padding: 1rem; border-left: 3px solid var(--accent); font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
 
         /* --- Research / Publications --- */
@@ -234,7 +238,6 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
     <nav id="navbar">
         <div class="logo">Wendell R. Yu</div>
         <div class="nav-controls">
@@ -250,10 +253,8 @@
         <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
     </nav>
 
-    <!-- Scroll to Top Arrow Button -->
     <button class="back-to-top" id="backToTop" aria-label="Go back to top">↑</button>
 
-    <!-- Hero / About Section -->
     <section id="about" class="hero fade-in">
         <div class="hero-content">
             <div class="hero-greeting">Wendell R. Yu • Instructor & Freelancer</div>
@@ -272,7 +273,6 @@
         </div>
     </section>
 
-    <!-- Interactive Experience Accordion -->
     <section id="experience" class="fade-in">
         <h2 class="section-title">Professional Experience</h2>
         <p class="section-desc">Click on a role to expand and view detailed operational achievements and key performance metrics.</p>
@@ -401,68 +401,106 @@
         </div>
     </section>
 
-    <!-- Filterable Projects Section -->
     <section id="projects" class="fade-in">
         <h2 class="section-title">Projects</h2>
-        <p class="section-desc">Filter through specific strategic projects to see how I tackle complex organizational challenges from inception to execution.</p>
+        <p class="section-desc">Filter through specific strategic projects to see how I tackle complex organizational challenges from inception to execution. Hover over a project to read the full details.</p>
 
         <div class="filter-controls" id="filter-container">
             <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="operations">Operations</button>
             <button class="filter-btn" data-filter="finance">Finance</button>
-            <button class="filter-btn" data-filter="strategy">Strategy</button>
+            <button class="filter-btn" data-filter="management">Management</button>
+            <button class="filter-btn" data-filter="records">Records</button>
         </div>
 
         <div class="projects-grid" id="projects-grid">
-            <div class="project-card" data-category="operations strategy">
+            <div class="project-card" data-category="finance management">
                 <div class="project-thumbnail">
-                    <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Remote Workspace Map Layout">
+                    <img src="https://copilot.microsoft.com/th/id/BCO.03e4d9d5-a916-4d35-820c-f6e4ba42863a.png" alt="Remote Workspace Map Layout">
                 </div>
                 <div class="project-content">
-                    <div class="project-category">Operations & Strategy</div>
-                    <h3 class="project-title">Global Remote Logistics Overhaul</h3>
-                    <p class="project-desc">Designed a centralized asynchronous workflow, restoring productivity in 60 days and increasing overall output by 15%.</p>
+                    <div class="project-category">Finance and Management</div>
+                    <h3 class="project-title">Printing Press POS</h3>
+                    <p class="project-desc">The Printing Press POS is designed to handle job-order transactions for services such as document printing, posters, tarpaulins, brochures, and other customized print jobs. Unlike retail POS systems, it focuses on order-based workflows, where each transaction is tied to a specific client request, cost breakdown, and delivery schedule with three (3) branches.</p>
                     <div class="project-metric"><strong>Result:</strong> Workflow centralized efficiently.</div>
                 </div>
             </div>
 
-            <div class="project-card" data-category="finance operations">
+            <div class="project-card" data-category="management records">
                 <div class="project-thumbnail">
-                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Logistics Warehouse Distribution Hub">
+                    <img src="https://copilot.microsoft.com/th/id/BCO.608cdc49-1a3b-4303-a75c-605f7a406a28.png" alt="Logistics Warehouse Distribution Hub">
                 </div>
                 <div class="project-content">
-                    <div class="project-category">Finance & Operations</div>
-                    <h3 class="project-title">Enterprise Supply Chain Centralization</h3>
-                    <p class="project-desc">Audited 150+ contracts and instituted a centralized approval matrix, reducing procurement spend by $2.4M annually.</p>
-                    <div class="project-metric"><strong>Result:</strong> Saved $2.4M in expenditures.</div>
+                    <div class="project-category">Monitoring and Management</div>
+                    <h3 class="project-title">Mangroves Profiling and Decision Support System</h3>
+                    <p class="project-desc">This system is a Decision Support System (DSS) developed for the Department of Environment and Natural Resources (DENR), Community Environment and Natural Resources Office (CENRO) in Palo, Leyte. It is designed to profile mangroves and provide administrators with reliable, spatially-based information to guide environmental management, particularly in reforestation and conservation efforts.</p>
+                    <div class="project-metric"><strong>Result:</strong> Improved mangrove monitoring and management efficiency — enabling accurate species identification, faster decision-making, and significant cost savings in field operations and documentation.</div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="management records">
+                <div class="project-thumbnail">
+                    <img src="https://github.com/wendelrivasyu/dellPortfolio/blob/main/Screenshot%202026-05-20%20141733.png?raw=true" alt="LES-LPACS">
+                </div>
+                <div class="project-content">
+                    <div class="project-category">Library Management</div>
+                    <h3 class="project-title">LES-LPACS</h3>
+                    <p class="project-desc">The Limba Elementary School – Local Public Access Catalog (LES-LPAC) System is a database-driven application designed to digitize and streamline the cataloging of library resources, enabling students, teachers, and administrators to quickly search, retrieve, and manage books and references; by integrating user-friendly search functions, borrowing records, and inventory management, the system reduces manual errors, improves circulation efficiency, and enhances accessibility of educational materials, resulting in better resource utilization and stronger support for academic learning.</p>
+                    <div class="project-metric"><strong>Result:</strong> Enhanced accessibility of library resources, reduced manual cataloging errors, and improved efficiency in book circulation — leading to better resource utilization and stronger support for academic learning.</div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="management records">
+                <div class="project-thumbnail">
+                    <img src="https://copilot.microsoft.com/th/id/BCO.38798263-ea31-4f46-81ad-d2c1cae1b2f7.png" alt="Logistics Warehouse Distribution Hub">
+                </div>
+                <div class="project-content">
+                    <div class="project-category">Inventory Management</div>
+                    <h3 class="project-title">LNU : Supply Inventory Management System</h3>
+                    <p class="project-desc">The Supply Inventory Management System developed for the Supply Office of Leyte Normal University is a technology-based solution designed to replace inefficient manual processes with automated, real-time inventory tracking, reporting, and procurement management. Anchored on inventory management theories such as the Two-Bin System, Just-in-Time, and Vendor-Managed Inventory, the system integrates database-driven functions (CRUD operations, purchase order generation, and report automation) to streamline resource handling. Using the System Development Life Cycle (SDLC) and action research methodology, the project assessed current inefficiencies, designed user-friendly interfaces, and implemented features that address stockouts, overstocking, and inaccurate records.</p>
+                    <div class="project-metric"><strong>Result:</strong> The system significantly improved transaction speed, accuracy, and transparency; 80% of supply office personnel reported higher satisfaction due to reduced manual workload, enhanced efficiency, and better decision-making, leading to lower operational costs and optimized resource availability across the university’s departments.</div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="finance">
+                <div class="project-thumbnail">
+                    <img src="https://copilot.microsoft.com/th/id/BCO.6c036bde-2bef-4298-8ce9-e335ce702eca.png" alt="Logistics Warehouse Distribution Hub">
+                </div>
+                <div class="project-content">
+                    <div class="project-category">Finance</div>
+                    <h3 class="project-title">iFinanceTracker</h3>
+                    <p class="project-desc">The iFinanceTracker (iFT) is a web-based financial management system that automatically computes daily income and expenses while presenting statistical insights through interactive charts and category-based spending analysis; by visualizing income, expense, and savings trends in real time, it helps users understand their financial behavior, identify high-spending areas, and make informed decisions to improve budgeting and achieve better savings outcomes.</p>
+                    <div class="project-metric"><strong>Result:</strong> Improved financial awareness and decision-making — enabling users to track spending patterns, identify high-expense categories, and achieve greater control over personal budgeting and savings goals.</div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="management records">
+                <div class="project-thumbnail">
+                    <img src="https://copilot.microsoft.com/th/id/BCO.f9250f0f-0ec4-45fd-9df8-5ebe03e3c8df.png" alt="Logistics Warehouse Distribution Hub">
+                </div>
+                <div class="project-content">
+                    <div class="project-category">Records Management</div>
+                    <h3 class="project-title">Edukasyon2Ps</h3>
+                    <p class="project-desc">The Edukasyon 2Ps System serves as a comprehensive registrar‑style platform developed for the Province of Leyte, designed to record and manage student information, academic activities, attendance, typing‑test results, and enrollment data in one centralized database; by integrating these core functions, it simplifies administrative workflows, enhances data accuracy, and ensures efficient monitoring of student progress and participation.</p>
+                    <div class="project-metric"><strong>Result:</strong> Streamlined record‑keeping and improved educational management — enabling administrators to access real‑time student data, automate enrollment processes, and maintain transparent documentation that supports better academic tracking and service delivery.</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Research / Publications Section -->
     <section id="research" class="fade-in">
         <h2 class="section-title">Published Research</h2>
         <p class="section-desc">A collection of my academic studies and research published in online journals and repositories.</p>
         
         <div class="research-grid">
             <div class="research-card">
-                <div class="research-meta">Published: Journal of Educational Innovation • 2024</div>
-                <h3 class="research-title">Adaptive Learning Modalities in Hybrid Environments</h3>
-                <p class="research-desc">This study explores the efficacy of adaptive learning technologies when integrated into hybrid classroom settings.</p>
-                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" target="_blank">View Publication ↗</a>
-            </div>
-
-            <div class="research-card">
-                <div class="research-meta">Published: EdTech Review • 2023</div>
-                <h3 class="research-title">Evaluating Digital Literacy Among First-Generation College Students</h3>
-                <p class="research-desc">A comprehensive analysis of digital literacy gaps and the effectiveness of targeted intervention programs.</p>
-                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" target="_blank">View Publication ↗</a>
+                <div class="research-meta">Published: International Journal of Innovative Science and Research Technology • 2023</div>
+                <h3 class="research-title">Leyte Normal University: Supply Inventory Management System</h3>
+                <p class="research-desc"><b>Abstract:-</b> Business success in today's dynamic marketplace depends on effective supply inventory management. In this technologically advanced age, conventional manual methods are no longer sufficient. To improve accuracy, efficiency, and decision-making abilities, this study investigates the significance of technology adoption for efficient inventory management. It concludes several research studies and emphasizes the difficulties Small and Medium Enterprises (SMEs) in the Philippines face and their distinctive inventory management procedures. The supply office at Leyte Normal University is the focus of the proposed study, which aims to create an effective system for managing inventories. The study uses the action research methodology to design, implement, and evaluate a technology-based system that addresses current inefficiencies. The two-bin system, the just-in-time theory, and vendor-management inventory are examples of theoretical frameworks. Surveys using the Likert scale and open-ended questions will be used to gather data, and the results will show how the suggested method better satisfies user needs and increases efficiency. Advanced data analytics should be used, vendor collaboration should be encouraged, and customized reporting should be made possible. This study supports competitive enterprises, effective educational institutions, and improved inventory management methods.</p>
+                <a href="https://ijisrt.com/assets/upload/files/IJISRT23OCT411.pdf" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" target="_blank">View Publication ↗</a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section powered by Web3Forms -->
     <section id="contact" class="fade-in">
         <h2 class="section-title">Start a Conversation</h2>
         <p class="section-desc">I am currently exploring new opportunities. Reach out to discuss how we can align on your business and educational objectives.</p>
@@ -472,16 +510,14 @@
                 <h3 style="margin-bottom: 1rem;">Direct Contact</h3>
                 <p style="color: var(--text-secondary); margin-bottom: 2rem;">Prefer direct email or LinkedIn? Use the links below.</p>
                 <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <a href="mailto:wendelrivasyu.17@gmail.com" class="btn btn-outline" style="justify-content: flex-start;">✉️ wendelrivasyu.17@gmail.com</a>
-                    <a href="#" class="btn btn-outline" style="justify-content: flex-start;">in linkedin.com/in/wendell-yu</a>
+                    <a href="mailto:wendelrivasyu.17@gmail.com" class="btn btn-outline" style="justify-content: flex-start;">📧 wendelrivasyu.17@gmail.com</a>
+                    <a href="https://www.facebook.com/wendelrivasyu/" class="btn btn-outline" style="justify-content: flex-start;">🌐 facebook.com/wendelrivasyu/</a>
                 </div>
             </div>
 
             <form id="contactForm" method="POST">
-                <!-- Verified Active Web3Forms Key -->
                 <input type="hidden" name="access_key" value="9f47468c-2876-4d11-bf23-c886348baf19">
                 
-                <!-- Optional anti-spam optimization -->
                 <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
                 <div class="form-group">
@@ -497,7 +533,6 @@
                     <textarea id="message" name="message" class="form-control" required placeholder="How can I help your organization?"></textarea>
                 </div>
                 
-                <!-- Submission Button with a Loading Spinner -->
                 <button type="submit" class="btn btn-primary" id="submitBtn">
                     <span class="spinner" id="btnSpinner"></span>
                     <span id="btnText">Send Message</span>
@@ -679,6 +714,167 @@
             });
         }, observerOptions);
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ==========================================
+        // 7. FIXED: Project Card Independent Hover & Section Layering Fix
+        // ==========================================
+        document.querySelectorAll('.project-card').forEach(card => {
+            const desc = card.querySelector('.project-desc');
+            const metric = card.querySelector('.project-metric');
+            const grid = card.closest('.projects-grid');
+            
+            // Fix 1: Stop row neighbors from stretching 
+            if (grid) {
+                grid.style.alignItems = 'start';
+            }
+
+            if (desc && metric) {
+                // Apply smooth transitions
+                desc.style.transition = 'max-height 0.5s ease-in-out';
+                desc.style.overflow = 'hidden';
+                metric.style.transition = 'max-height 0.5s ease-in-out';
+                metric.style.overflow = 'hidden';
+
+                // Store original HTML contents
+                const origDescHTML = desc.innerHTML;
+                const origMetricHTML = metric.innerHTML;
+                
+                // Generate Truncated Description (Max 50 words)
+                const descWords = desc.textContent.trim().split(/\s+/);
+                let truncDescHTML = origDescHTML;
+                if (descWords.length > 50) {
+                    truncDescHTML = descWords.slice(0, 50).join(' ') + '...';
+                }
+
+                // Generate Truncated Metric/Result (Max 5 words)
+                const metricRawText = metric.textContent.replace('Result:', '').trim();
+                const metricWords = metricRawText.split(/\s+/);
+                let truncMetricHTML = origMetricHTML;
+                if (metricWords.length > 5) {
+                    truncMetricHTML = `<strong>Result:</strong> ${metricWords.slice(0, 5).join(' ')}...`;
+                }
+
+                // Set initial truncated text
+                desc.innerHTML = truncDescHTML;
+                metric.innerHTML = truncMetricHTML;
+
+                // Measure exact height of truncated text
+                const truncatedDescHeight = desc.scrollHeight + 'px';
+                const truncatedMetricHeight = metric.scrollHeight + 'px';
+                
+                desc.style.maxHeight = truncatedDescHeight;
+                metric.style.maxHeight = truncatedMetricHeight;
+
+                // --- Expand smoothly on hover ---
+                card.addEventListener('mouseenter', () => {
+                    const parentSection = card.closest('section');
+                    
+                    // Fix 2: Force the entire projects section to stack ABOVE the research section
+                    if (parentSection) {
+                        parentSection.style.position = 'relative';
+                        parentSection.style.zIndex = '50';
+                    }
+                    card.style.position = 'relative';
+                    card.style.zIndex = '60';
+
+                    desc.innerHTML = origDescHTML;
+                    metric.innerHTML = origMetricHTML;
+                    
+                    const newDescHeight = desc.scrollHeight;
+                    const newMetricHeight = metric.scrollHeight;
+
+                    const diffDesc = newDescHeight - parseInt(truncatedDescHeight);
+                    const diffMetric = newMetricHeight - parseInt(truncatedMetricHeight);
+                    const totalDiff = diffDesc + diffMetric;
+
+                    // Fix 3: Use negative margin so it drops down like a clean menu overlay
+                    card.style.marginBottom = `-${totalDiff}px`;
+                    desc.style.maxHeight = newDescHeight + 'px';
+                    metric.style.maxHeight = newMetricHeight + 'px';
+                });
+
+                // --- Collapse smoothly on mouse leave ---
+                card.addEventListener('mouseleave', () => {
+                    card.style.marginBottom = '0px';
+                    desc.style.maxHeight = truncatedDescHeight;
+                    metric.style.maxHeight = truncatedMetricHeight;
+                    
+                    setTimeout(() => {
+                        if (!card.matches(':hover')) {
+                            desc.innerHTML = truncDescHTML;
+                            metric.innerHTML = truncMetricHTML;
+                            
+                            card.style.zIndex = '';
+                            const parentSection = card.closest('section');
+                            if (parentSection) {
+                                parentSection.style.zIndex = '';
+                            }
+                        }
+                    }, 500);
+                });
+            }
+        });
+        
+        // ==========================================
+        // 8. FIXED: Published Research Card Independent Hover Fix
+        // ==========================================
+        document.querySelectorAll('.research-card').forEach(card => {
+            const desc = card.querySelector('.research-desc');
+            const grid = card.closest('.research-grid');
+            
+            if (grid) {
+                grid.style.alignItems = 'start';
+            }
+
+            if (desc) {
+                desc.style.transition = 'max-height 0.5s ease-in-out';
+                desc.style.overflow = 'hidden';
+
+                const origDescHTML = desc.innerHTML;
+                const descWords = desc.textContent.trim().split(/\s+/);
+                
+                if (descWords.length > 60) {
+                    const truncDescHTML = descWords.slice(0, 60).join(' ') + '...';
+                    desc.innerHTML = truncDescHTML;
+                    
+                    const truncatedHeight = desc.scrollHeight + 'px';
+                    desc.style.maxHeight = truncatedHeight;
+
+                    card.addEventListener('mouseenter', () => {
+                        const parentSection = card.closest('section');
+                        if (parentSection) {
+                            parentSection.style.position = 'relative';
+                            parentSection.style.zIndex = '50';
+                        }
+                        card.style.position = 'relative';
+                        card.style.zIndex = '60';
+
+                        desc.innerHTML = origDescHTML; 
+                        const newHeight = desc.scrollHeight;
+                        const diff = newHeight - parseInt(truncatedHeight);
+
+                        card.style.marginBottom = `-${diff}px`;
+                        desc.style.maxHeight = newHeight + 'px'; 
+                    });
+
+                    card.addEventListener('mouseleave', () => {
+                        card.style.marginBottom = '0px';
+                        desc.style.maxHeight = truncatedHeight; 
+                        
+                        setTimeout(() => {
+                            if (!card.matches(':hover')) {
+                                desc.innerHTML = truncDescHTML;
+                                card.style.zIndex = '';
+                                const parentSection = card.closest('section');
+                                if (parentSection) {
+                                    parentSection.style.zIndex = '';
+                                }
+                            }
+                        }, 500); 
+                    });
+                }
+            }
+        });
     </script>
 </body>
 </html>
