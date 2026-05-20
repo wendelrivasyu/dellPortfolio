@@ -62,19 +62,11 @@
         .btn-outline:hover { background-color: var(--accent-light); }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        /* Smooth CSS Loading Spinner Object */
         .spinner {
-            display: none;
-            width: 18px;
-            height: 18px;
-            border: 2px solid transparent;
-            border-radius: 50%;
-            border-top-color: currentColor;
-            animation: spin 0.7s linear infinite;
+            display: none; width: 18px; height: 18px; border: 2px solid transparent;
+            border-radius: 50%; border-top-color: currentColor; animation: spin 0.7s linear infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* --- Navigation & Progress Bar --- */
         nav {
@@ -82,10 +74,7 @@
             backdrop-filter: blur(8px); padding: 1.2rem 2rem; display: flex; 
             justify-content: space-between; align-items: center; z-index: 1000;
         }
-        .progress-container {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
-            background: var(--border-color);
-        }
+        .progress-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--border-color); }
         .progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.1s; }
         .logo { font-size: 1.4rem; letter-spacing: -0.5px; }
         .nav-controls { display: flex; align-items: center; gap: 1.5rem; }
@@ -115,8 +104,17 @@
         section:hover .section-title::after { width: 100%; }
         .section-desc { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; margin-top: 1.5rem; }
 
-        /* --- Hero / About Section --- */
-        .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; gap: 4rem; padding-top: 10rem; }
+        /* --- Hero / About Section (Mobile First) --- */
+        .hero { 
+            min-height: 90vh; 
+            display: flex; 
+            flex-direction: column-reverse; /* Puts image on top for mobile */
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            gap: 3rem; 
+            padding-top: 8rem; 
+        }
         .hero-content { flex: 1; }
         .hero-greeting { 
             font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; 
@@ -125,18 +123,19 @@
         }
         .hero-title { font-size: clamp(2.5rem, 5vw, 4.2rem); line-height: 1.15; margin-bottom: 1.5rem; }
         .hero-title i { font-style: italic; font-weight: 400; color: var(--text-secondary); }
-        .hero-subtitle { font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 650px; line-height: 1.8; }
-        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .hero-profile { position: relative; flex-shrink: 0; }
+        .hero-subtitle { font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 650px; line-height: 1.8; margin-left: auto; margin-right: auto; }
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        
+        .hero-profile { position: relative; flex-shrink: 0; width: 100%; max-width: 280px; }
         .profile-img { 
-            width: 100%; max-width: 400px; height: auto; aspect-ratio: 4/5; object-fit: cover; 
+            width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; 
             border-radius: 4px; position: relative; z-index: 2; box-shadow: var(--shadow-md);
         }
         .profile-backdrop { 
-            position: absolute; top: 20px; left: 20px; width: 100%; height: 100%; 
+            position: absolute; top: 15px; left: 15px; width: 100%; height: 100%; 
             border: 2px solid var(--accent); border-radius: 4px; z-index: 1; transition: var(--transition);
         }
-        .hero-profile:hover .profile-backdrop { top: 10px; left: 10px; }
+        .hero-profile:hover .profile-backdrop { top: 8px; left: 8px; }
 
         /* --- Interactive Experience Accordion --- */
         .accordion { display: flex; flex-direction: column; gap: 1rem; }
@@ -214,10 +213,20 @@
         .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- Desktop Media Queries --- */
+        /* --- Desktop Media Queries (Returns layout to left-aligned row) --- */
         @media (min-width: 768px) {
             .nav-links { display: flex; }
-            .hero { flex-direction: row; align-items: center; }
+            .hero { 
+                flex-direction: row; 
+                text-align: left; 
+                align-items: center; 
+                gap: 4rem; 
+            }
+            .hero-subtitle { margin-left: 0; margin-right: 0; }
+            .hero-actions { justify-content: flex-start; }
+            .hero-profile { max-width: 400px; }
+            .profile-backdrop { top: 20px; left: 20px; }
+            
             .projects-grid { grid-template-columns: repeat(2, 1fr); }
             .contact-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; }
         }
@@ -248,7 +257,7 @@
     <section id="about" class="hero fade-in">
         <div class="hero-content">
             <div class="hero-greeting">Wendell R. Yu • Instructor & Freelancer</div>
-            <h1 class="hero-title">Developing potential <br><i>&amp;</i> delivering excellence.</h1>
+            <h1 class="hero-title">Developing Potential <br><i>&amp;</i> Delivering Excellence.</h1>
             <p class="hero-subtitle">
                 <strong>OBJECTIVE:</strong> To look for a job and opportunity where I could practice my knowledge and develop my personality as a career person while utilizing my skills. To bring out the hardness and the best of my potentials for the glory of God and for the benefits of my employer and myself in preparations for the advancement to the top management.
             </p>
@@ -258,7 +267,7 @@
             </div>
         </div>
         <div class="hero-profile">
-            <img src="https://lh3.googleusercontent.com/a/ACg8ocKXj8vXUoK5EbtEm5fh4NirFkltjlP7GQA86wgAXAjhjKxj4fC3=s288-c-no" alt="Wendell R. Yu - Professional Headshot" class="profile-img">
+            <img src="https://github.com/wendelrivasyu/dellPortfolio/blob/main/dell_longsleeve.jpg?raw=true" alt="Wendell R. Yu - Professional Headshot" class="profile-img">
             <div class="profile-backdrop"></div>
         </div>
     </section>
@@ -272,49 +281,121 @@
             <div class="accordion-item">
                 <button class="accordion-header">
                     <div class="acc-titles">
-                        <h3>Instructor & Freelancer</h3>
-                        <span>Academic Institution & Independent Practice | Present</span>
+                        <h3>Instructor</h3>
+                        <span>Edukasyon2Ps - ICT Computer Programming, Province of Leyte | Jan. 01, 2023 — Present</span>
                     </div>
                     <div class="acc-icon">+</div>
                 </button>
                 <div class="accordion-content">
                     <ul>
-                        <li>Fostering engaging learning environments and cultivating academic excellence for a diverse student body.</li>
-                        <li>Developing comprehensive curricula, delivering impactful lectures, and mentoring students to help them achieve their full potential.</li>
-                        <li>Providing specialized freelance services and project management to diverse clients across various industries.</li>
+                        <li>Fostering engaging learning environments and cultivating skills excellence for a diverse student body.</li>
+                        <li>Create structured lesson plans, modules, and projects tailored to learners’ skill levels.</li>
+                        <li>Facilitate coding exercises, debugging sessions, and real-world project simulations to reinforce learning for a practical application.</li>
+                        <li>Teach programming languages (e.g., HTML, CSS, JavaScript, PHP, SQL, C#, etc.) and frameworks, while mentoring students in best practices.</li>
+                        <li>Incorporate modern tools, IDEs, and version control systems (e.g., Git/GitHub) into lessons.</li>
+                        <li>Promote inclusive design principles and accessible coding practices.</li>
+                        <li>Stay updated with emerging technologies and adapt teaching methods to industry trends.</li>
                     </ul>
+                    <br>
                 </div>
             </div>
 
             <div class="accordion-item">
                 <button class="accordion-header">
                     <div class="acc-titles">
-                        <h3>Senior Project Manager</h3>
-                        <span>Apex Consulting Partners | 2016 — 2021</span>
+                        <h3>Freelancer</h3>
+                        <span>Independent Practice | 2015 — Present</span>
                     </div>
                     <div class="acc-icon">+</div>
                 </button>
                 <div class="accordion-content">
                     <ul>
-                        <li>Managed a portfolio of B2B client projects with budgets ranging from $500K to $3M.</li>
-                        <li>Led the successful launch of 12 major go-to-market strategies for Fortune 500 clients.</li>
+                        <li><i><b>Part-Time</b></i> - On-Call Tutor, Basic Programming Subject</li>
+                        <li><i><b>Graphic Design & Visuals</b></i> - Design promotional materials (pubmats, posters, banners). Create backdrops and event visuals. Develop branding assets with modern, emotionally resonant aesthetics.</li>
+                        <li><i><b>Technical Support & Maintenance</b></i> - Offer computer maintenance and repair consultation. Provide servicing for hardware/software issues. Guide clients in preventive care and optimization.</li>
+                        <li><i><b>Systems & Project Development</b></i> - Build and refine web-based systems and applications. Develop custom software solutions tailored to client needs. Ensure seamless frontend/backend integration with accessibility in mind.</li>
+                        <li><i><b>Consultation Services</b></i> - Advise on project planning, system design, and implementation. Provide insights on UX, UI, and workflow optimization. Offer guidance on digital tools, platforms, and best practices.</li>
                     </ul>
+                    <br>
                 </div>
             </div>
 
             <div class="accordion-item">
                 <button class="accordion-header">
                     <div class="acc-titles">
-                        <h3>Operations Analyst</h3>
-                        <span>Vanguard Logistics | 2013 — 2016</span>
+                        <h3>Secretary/Admin Staff</h3>
+                        <span>Admissions Office, Leyte Normal University | Jan. 01, 2020 — Dec. 31, 2022</span>
                     </div>
                     <div class="acc-icon">+</div>
                 </button>
                 <div class="accordion-content">
                     <ul>
-                        <li>Analyzed supply chain datasets to identify routing inefficiencies, improving delivery times by 14%.</li>
-                        <li>Assisted in the rollout of a new ERP system for 500+ regional employees.</li>
+                        <li><i><b>Admissions Support</b></i> - Assist in processing student applications and admission requirements. Maintain accurate records of applicants and enrolled students. Coordinate schedules for entrance exams, interviews, and orientations.</li>
+                        <li><i><b>Accreditation & Compliance</b></i> - Support ISO accreditation activities by organizing documentation and ensuring compliance with standards. Prepare reports and maintain records required for audits and evaluations. Collaborate with departments to gather and verify accreditation data.</li>
+                        <li><i><b>Document Management</b></i> - Route official documents to appropriate respondents and track completion. Maintain filing systems (physical and digital) for easy retrieval and reference. Ensure confidentiality and integrity of sensitive records.</li>
+                        <li><i><b>Office Administration</b></i> - Handle correspondence, scheduling, and communication within the Admissions Office. Provide clerical support for meetings, including minutes and agenda preparation. Assist in coordinating office activities and ensuring efficient workflow.</li>
                     </ul>
+                    <br>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <div class="acc-titles">
+                        <h3>Secretary/Admin Staff</h3>
+                        <span>College of Arts and Sciences (CAS), Leyte Normal University | May. 16, 2020 — Jun. 30, 2020</span>
+                    </div>
+                    <div class="acc-icon">+</div>
+                </button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><i><b>Academic Support</b></i> - Assist in coordinating faculty schedules, meetings, and academic activities. Support student services by handling inquiries, processing requests, and maintaining records. Prepare reports, memos, and correspondence for the Dean and faculty members.</li>
+                        <li><i><b>Document Management</b></i> - Route official documents to appropriate respondents and track their completion. Maintain organized filing systems (digital and physical) for academic records, communications, and institutional documents. Ensure confidentiality and accuracy in handling sensitive information.</li>
+                        <li><i><b>Accreditation & Compliance</b></i> - Assist in preparing documentation for ISO accreditation and other quality assurance processes. Compile and verify data required for institutional audits and evaluations. Coordinate with faculty and staff to ensure compliance with academic and administrative standards.</li>
+                        <li><i><b>Office Administration</b></i> - Manage schedules, appointments, and communications within the College of Arts and Sciences. Provide clerical support during meetings. Facilitate smooth workflow by coordinating tasks across departments.</li>
+                    </ul>
+                    <br>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <div class="acc-titles">
+                        <h3>Admin Staff</h3>
+                        <span>Center for Teaching Ecxellence and Review Center (CTERC), Leyte Normal University | Oct. 17, 2018 — May. 15, 2020</span>
+                    </div>
+                    <div class="acc-icon">+</div>
+                </button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><i><b>General Office Work</b></i> - Handle correspondence, filing, and record-keeping (digital and physical). Manage schedules, appointments, and meeting logistics. Prepare reports, memos, and official communications. Maintain confidentiality and accuracy in handling sensitive information.</li>
+                        <li><i><b>Review Center Support</b></i> - Assist in enrollment and registration processes for review programs.Coordinate schedules for room assignments, classes, exams, and orientations. Provide clerical support to instructors and facilitators. Track student attendance, performance, and feedback. And create a technical report after completion of review sessions.</li>
+                        <li><i><b>Training & CPD Programs</b></i> - Organize and facilitate training sessions for university personnel. Support Continuing Professional Development (CPD) programs by handling logistics, documentation, and accreditation requirements. Coordinate with trainers, participants, and accrediting bodies to ensure compliance with CPD standards. Prepare certificates, evaluation forms, and reports for training activities.</li>
+                        <li><i><b>Document Management</b></i> - Route official documents to appropriate respondents and monitor completion. Organize accreditation-related files and compliance records. Ensure proper archiving and retrieval systems for institutional documents.</li>
+                        <li><i><b>Client & Student Assistance</b></i> - Respond to inquiries from students, parents, and stakeholders. Provide guidance on admission, review schedules, and requirements. Support customer service functions to maintain a professional and welcoming environment.</li>
+                    </ul>
+                    <br>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <div class="acc-titles">
+                        <h3>On-the-Job-Training (OJT)</h3>
+                        <span>Information Communication Technology Staff (ICTS) Department of Public Works and Highways (DPWH) RO8 | Apr. 10, 2017 — Aug. 18, 2017</span>
+                    </div>
+                    <div class="acc-icon">+</div>
+                </button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><i><b>Computer Maintenance & Support</b></i> - Assist in diagnosing and troubleshooting hardware/software issues. Perform preventive maintenance and system optimization. Provide support for office staff in resolving technical concerns.</li>
+                        <li><i><b>Installation & Configuration</b></i> - Participate in computer setup, including operating system installation. Assist in installing and configuring software applications. Observe and support network setup, including fiber optic internet installation.</li>
+                        <li><i><b>Server Room Exposure</b></i> - Observe and learn about server room operations, including hardware setup, cabling, and cooling systems. Gain awareness of data security, backup procedures, and system monitoring. Understand the role of servers in supporting departmental ICT infrastructure.</li>
+                        <li><i><b>Instructions from the Director</b></i> - Follow directives and assignments provided by the ICT Director. Assist in tasks aligned with departmental priorities and ICT projects. Learn professional discipline, accountability, and adherence to organizational standards.</li>
+                        <li><i><b>ICT Operations Exposure</b></i> - Shadow ICT personnel in managing departmental systems and infrastructure. Learn documentation practices for ICT projects and maintenance logs. Gain awareness of government ICT standards and compliance requirements.</li>
+                        <li><i><b>Professional Development</b></i> - Develop technical skills through hands-on tasks and guided supervision. Strengthen problem-solving and analytical abilities in real-world scenarios. Build teamwork and communication skills by collaborating with ICT staff.</li>
+                    </ul>
+                    <br>
                 </div>
             </div>
         </div>
@@ -397,22 +478,22 @@
             </div>
 
             <form id="contactForm" method="POST">
-                <!-- Verified Active Web3Forms Key Added Below -->
+                <!-- Verified Active Web3Forms Key -->
                 <input type="hidden" name="access_key" value="9f47468c-2876-4d11-bf23-c886348baf19">
                 
                 <!-- Optional anti-spam optimization -->
                 <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
                 <div class="form-group">
-                    <label for="name">Full Name *</label>
+                    <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" class="form-control" required placeholder="Jane Doe">
                 </div>
                 <div class="form-group">
-                    <label for="email">Sender Email *</label>
+                    <label for="email">Sender Email</label>
                     <input type="email" id="email" name="email" class="form-control" required placeholder="jane@company.com">
                 </div>
                 <div class="form-group">
-                    <label for="message">Inquiry Details *</label>
+                    <label for="message">Inquiry Details</label>
                     <textarea id="message" name="message" class="form-control" required placeholder="How can I help your organization?"></textarea>
                 </div>
                 
@@ -525,7 +606,7 @@
             });
         });
 
-        // 5. Stable Contact Form Handler via Web3Forms (Supports local file systems perfectly)
+        // 5. Stable Contact Form Handler via Web3Forms with Custom Subject Logic
         const form = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnSpinner = document.getElementById('btnSpinner');
@@ -535,7 +616,7 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Activate Visual Loading State Objects
+            // Activate Visual Loading State
             submitBtn.disabled = true;
             btnSpinner.style.display = 'inline-block';
             btnText.textContent = 'Processing...';
@@ -543,8 +624,10 @@
 
             const formData = new FormData(form);
             const object = Object.fromEntries(formData);
-
+            
+            // --- Custom Subject Line Injection ---
             object.subject = `PortfolioSendMail - ${object.name}`;
+            // -------------------------------------
 
             const json = JSON.stringify(object);
 
@@ -559,13 +642,11 @@
             .then(async (response) => {
                 let res = await response.json();
                 if (response.status == 200) {
-                    // Success State Treatment
                     formStatus.textContent = 'Success! Your message was transmitted cleanly.';
                     formStatus.className = 'form-msg success';
                     formStatus.style.display = 'block';
                     form.reset();
                 } else {
-                    // Error Handling
                     console.log(response);
                     formStatus.textContent = res.message || 'Submission error occurred.';
                     formStatus.className = 'form-msg error';
